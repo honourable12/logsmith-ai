@@ -4,6 +4,9 @@ use std::thread;
 mod ingest;
 mod pipeline;
 mod features;
+mod output;
+
+use output::csv::write_csv;
 
 fn main() {
     let (line_tx, line_rx) = mpsc::channel();
@@ -11,7 +14,7 @@ fn main() {
     
     let path = "sample.log".to_string();
     
-    let reader = thread::spwan({
+    let reader = thread::spawn({
         let tx = line_tx.clone();
         move || ingest::reader::read_file(path, tx)
     });
@@ -29,4 +32,9 @@ fn main() {
         features.request_count,
         features.avg_latency
     );
+    
+    let windows = features::window::aggregate_windows(event_rx, 300);
+    
+    write_csv("features.csv", &windows)
+        .expect("failed to write CSV")
 }
