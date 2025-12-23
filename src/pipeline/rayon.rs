@@ -1,5 +1,5 @@
+use crate::ingest::parser::LogEvent;
 use rayon::prelude::*;
-use crate::ingest::parseer::LogEvent;
 
 pub fn parse_parallel(lines: Vec<String>) -> Vec<LogEvent> {
     lines

@@ -10,10 +10,8 @@ pub struct WindowFeatures {
     pub avg_latency: f64,
 }
 
-use super::window::WindowFeatures;
-
 pub fn aggregate_windows(
-    rx: std::sync::mpsc::Receiver<LogEvent>,
+    rx: crossbeam_channel::Receiver<LogEvent>,
     window_size_secs: i64,
 ) -> Vec<WindowFeatures> {
     let mut windows = Vec::new();

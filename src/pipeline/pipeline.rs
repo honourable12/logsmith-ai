@@ -1,13 +1,9 @@
-use std::sync::mpsc::{Receiver, Sender};
+use crossbeam::channel::{Receiver, Sender};
 use std::thread;
 
 use crate::ingest::parser::LogEvent;
 
-pub fn spawn_workers(
-    n: usize,
-    rx: Receiver<String>,
-    tx: Sender<LogEvent>,
-) {
+pub fn spawn_workers(n: usize, rx: Receiver<String>, tx: Sender<LogEvent>) {
     for _ in 0..n {
         let rx = rx.clone();
         let tx = tx.clone();

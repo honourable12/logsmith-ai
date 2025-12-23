@@ -9,7 +9,7 @@ pub fn write_csv(path: &str,
         let file = File::create(path)?;
         let mut writer = Writer::from_writer(file);
         
-        for window in windows {
+        for window in window {
             writer.serialize(window)?;
         }
         

@@ -1,10 +1,10 @@
-use std::sync::mpsc;
+use crossbeam::channel as mpsc;
 
 use crate::ingest::parser::LogEvent;
 
 pub struct Features {
-    pub request_count: usize;
-    pub avg_latency: f64;
+    pub request_count: usize,
+    pub avg_latency: f64,
 }
 
 pub fn aggregate(rx: mpsc::Receiver<LogEvent>) -> Features {
