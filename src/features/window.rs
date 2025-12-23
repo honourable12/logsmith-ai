@@ -57,3 +57,40 @@ pub fn aggregate_windows(
 
     windows
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::ingest::parser::LogEvent;
+    use chrono::{TimeZone, Utc};
+    use crossbeam_channel;
+
+    #[test]
+    fn aggregates_events_into_single_window() {
+        let (tx, rx) = crossbeam_channel::unbounded();
+
+        let events = vec! {
+            LogEvent {
+                timestamp: Utc.with_ymd_and_hms(2025, 11, 8, 10, 0, 0).unwrap(),
+                level: "INFO".into(),
+                latency_ms: 100,
+            },
+            LogEvent {
+                timestamp: Utc.with_ymd_and_hms(2025, 11, 8, 10, 2, 0).unwrap(),
+                level: "INFO".into(),
+                                latency_ms: 200,
+                            },
+        };
+
+                        for e in events {
+                            tx.send(e).unwrap();
+                        }
+                        drop(tx);
+
+                        let windows = aggregate_windows(rx, 300);
+
+                        assert_eq!(windows.len(), 1);
+                        assert_eq!(windows[0].request_count, 2);
+                        assert_eq!(windows[0].avg_latency, 150.0);
+                    }
+                }
