@@ -7,6 +7,7 @@ mod output;
 mod pipeline;
 
 use output::csv::write_csv;
+use output::parquet::write_parquet;
 
 fn main() {
     env_logger::init();
@@ -38,5 +39,6 @@ fn main() {
 
     let windows = features::window::aggregate_windows(event_rx, 300);
 
-    write_csv("features.csv", &windows).expect("failed to write CSV")
+    write_csv("features.csv", &windows).expect("failed to write CSV");
+    write_parquet("features.parquet", &windows).expect("failed to write Parquet");
 }

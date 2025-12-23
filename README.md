@@ -24,7 +24,7 @@ Modern AI systems depend on reliable, high-throughput data ingestion pipelines. 
 * 📥 **Streaming ingestion** of large log files
 * 🧵 **Multi-threaded parsing** using message-passing (no shared mutable state)
 * ⏱️ **Time-windowed feature aggregation**
-* 📤 **CSV export** for ML training pipelines
+* 📤 **CSV/Parquet export** for ML training pipelines
 * ⚡ **Batch parallelism** using Rayon (offline workloads)
 * 📊 **Benchmarks** using Criterion
 
@@ -128,6 +128,11 @@ They compare:
 * csv
 * rayon
 * criterion
+* crossbeam-channel
+* log
+* env_logger
+* arrow
+
 
 ---
 
