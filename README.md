@@ -2,8 +2,6 @@
 
 A high-performance Rust backend pipeline that ingests structured logs, processes them concurrently, and produces time-windowed features suitable for AI/ML training and monitoring.
 
-This project is intentionally designed to demonstrate **backend engineering fundamentals**, **Rust concurrency**, and **AI systems awareness** at an entry–junior level.
-
 ---
 
 ## 🚀 Why This Project Exists
